@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FoodGo - Online Food Delivery</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="logo">
+            Food<span>Go</span>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#restaurants">Restaurants</a>
+            <a href="#categories">Categories</a>
+            <a href="cart.html" class="cart-link">
+                Cart 🛒
+                <span id="cart-count">0</span>
+            </a>
+        </nav>
+    </header>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Delicious food,
+                <span>delivered to you.</span>
+            </h1>
+
+            <p>
+                Discover the best restaurants and order your
+                favorite meals from the comfort of your home.
+            </p>
+
+            <div class="search-box">
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Search for food or restaurants..."
+                >
+
+                <button onclick="searchFood()">
+                    Search
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Categories -->
+    <section class="section" id="categories">
+
+        <div class="section-header">
+            <h2>Explore Categories</h2>
+            <p>Choose what you are craving today</p>
+        </div>
+
+        <div class="categories">
+
+            <div class="category-card">
+                <div class="category-icon">🍕</div>
+                <h3>Pizza</h3>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🍔</div>
+                <h3>Burgers</h3>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🍜</div>
+                <h3>Chinese</h3>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🍛</div>
+                <h3>Indian</h3>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🍰</div>
+                <h3>Desserts</h3>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🥗</div>
+                <h3>Healthy</h3>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Restaurants -->
+    <section class="section" id="restaurants">
+
+        <div class="section-header">
+            <h2>Popular Restaurants</h2>
+            <p>Top-rated restaurants near you</p>
+        </div>
+
+        <div class="restaurant-grid" id="restaurant-container">
+
+            <!-- Restaurant 1 -->
+            <div class="restaurant-card">
+
+                <div class="restaurant-image">
+                    🍕
+                </div>
+
+                <div class="restaurant-info">
+
+                    <h3>Pizza Palace</h3>
+
+                    <p class="cuisine">
+                        Italian • Pizza • Fast Food
+                    </p>
+
+                    <div class="restaurant-details">
+                        <span class="rating">★ 4.5</span>
+                        <span>30-40 min</span>
+                    </div>
+
+                    <a href="menu.html?restaurant_id=1" class="view-menu">
+                        View Menu
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Restaurant 2 -->
+            <div class="restaurant-card">
+
+                <div class="restaurant-image">
+                    🍔
+                </div>
+
+                <div class="restaurant-info">
+
+                    <h3>Burger House</h3>
+
+                    <p class="cuisine">
+                        Burgers • Fast Food • Beverages
+                    </p>
+
+                    <div class="restaurant-details">
+                        <span class="rating">★ 4.3</span>
+                        <span>25-35 min</span>
+                    </div>
+
+                    <a href="menu.html?restaurant_id=2" class="view-menu">
+                        View Menu
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Restaurant 3 -->
+            <div class="restaurant-card">
+
+                <div class="restaurant-image">
+                    🍛
+                </div>
+
+                <div class="restaurant-info">
+
+                    <h3>Spice Garden</h3>
+
+                    <p class="cuisine">
+                        Indian • North Indian • Thali
+                    </p>
+
+                    <div class="restaurant-details">
+                        <span class="rating">★ 4.6</span>
+                        <span>30-45 min</span>
+                    </div>
+
+                    <a href="menu.html?restaurant_id=3" class="view-menu">
+                        View Menu
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Restaurant 4 -->
+            <div class="restaurant-card">
+
+                <div class="restaurant-image">
+                    🍜
+                </div>
+
+                <div class="restaurant-info">
+
+                    <h3>Dragon Wok</h3>
+
+                    <p class="cuisine">
+                        Chinese • Asian • Noodles
+                    </p>
+
+                    <div class="restaurant-details">
+                        <span class="rating">★ 4.4</span>
+                        <span>25-40 min</span>
+                    </div>
+
+                    <a href="menu.html?restaurant_id=4" class="view-menu">
+                        View Menu
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <div class="footer-content">
+
+            <div>
+                <h2>Food<span>Go</span></h2>
+
+                <p>
+                    Your favorite food, delivered fast.
+                </p>
+            </div>
+
+            <div>
+                <h3>Quick Links</h3>
+
+                <a href="index.html">Home</a>
+                <a href="#restaurants">Restaurants</a>
+                <a href="cart.html">Cart</a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            © 2026 FoodGo. All rights reserved.
+        </div>
+
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+</html>
+
