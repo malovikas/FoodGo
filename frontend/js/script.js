@@ -132,7 +132,10 @@ async function loadRestaurants() {
             card.innerHTML = `
 
                 <div class="restaurant-image">
-                    ${restaurant.image || "🍽️"}
+                    <img 
+                        src="${restaurant.image}"
+                        alt="${restaurant.name}"
+                    >
                 </div>
 
                 <div class="restaurant-info">

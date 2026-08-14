@@ -1,0 +1,41 @@
+services:
+
+  user-service:
+    build:
+      context: ..
+      dockerfile: backend/user-service/Dockerfile
+    container_name: foodgo-user-service
+    ports:
+      - "5001:5001"
+
+  restaurant-service:
+    build:
+      context: ..
+      dockerfile: backend/restaurant-service/Dockerfile
+    container_name: foodgo-restaurant-service
+    ports:
+      - "5002:5002"
+
+  order-service:
+    build:
+      context: ..
+      dockerfile: backend/order-service/Dockerfile
+    container_name: foodgo-order-service
+    ports:
+      - "5003:5003"
+
+  payment-service:
+    build:
+      context: ..
+      dockerfile: backend/payment-service/Dockerfile
+    container_name: foodgo-payment-service
+    ports:
+      - "5004:5004"
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: foodgo-frontend
+    ports:
+      - "8080:80"

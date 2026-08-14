@@ -27,7 +27,7 @@ async function loadMenu() {
 
         const response =
             await fetch(
-                `http://localhost:5002/api/restaurants/${restaurantId}/menu`
+                `${RESTAURANT_API_BASE_URL}/api/restaurants/${restaurantId}/menu`
             );
 
         if (!response.ok) {
@@ -144,7 +144,7 @@ async function loadRestaurantDetails() {
 
         const response =
             await fetch(
-                `http://localhost:5002/api/restaurants/${restaurantId}`
+                `${RESTAURANT_API_BASE_URL}/api/restaurants/${restaurantId}`
             );
 
         if (!response.ok) {
