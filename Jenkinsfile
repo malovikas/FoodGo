@@ -2,40 +2,42 @@ pipeline {
 
     agent any
 
+    environment {
+        DOCKERHUB_USER = 'malovikas'
+    }
+
     stages {
 
         stage('Checkout') {
             steps {
-                echo 'Checking out source code...'
+                echo 'Checking out source code from GitHub...'
                 checkout scm
             }
         }
 
         stage('Build Docker Images') {
             steps {
-                echo 'Building Docker images...'
+                echo 'Building FoodGo Docker images...'
 
                 sh '''
-                    docker build -t foodgo-frontend ./frontend
+                    docker build -t ${DOCKERHUB_USER}/foodgo-user-service:v1 ./backend/user-service
 
-                    docker build -t foodgo-user-service \
-                        -f backend/user-service/Dockerfile .
+                    docker build -t ${DOCKERHUB_USER}/foodgo-restaurant-service:v1 ./backend/restaurant-service
 
-                    docker build -t foodgo-restaurant-service \
-                        -f backend/restaurant-service/Dockerfile .
+                    docker build -t ${DOCKERHUB_USER}/foodgo-order-service:v1 ./backend/order-service
 
-                    docker build -t foodgo-order-service \
-                        -f backend/order-service/Dockerfile .
+                    docker build -t ${DOCKERHUB_USER}/foodgo-payment-service:v1 ./backend/payment-service
 
-                    docker build -t foodgo-payment-service \
-                        -f backend/payment-service/Dockerfile .
+                    docker build -t ${DOCKERHUB_USER}/foodgo-api-gateway:v1 ./backend/api-gateway
+
+                    docker build -t ${DOCKERHUB_USER}/foodgo-frontend:v1 ./frontend
                 '''
             }
         }
 
         stage('Docker Images') {
             steps {
-                echo 'Displaying created Docker images...'
+                echo 'Displaying FoodGo Docker images...'
 
                 sh '''
                     docker images | grep foodgo
@@ -43,10 +45,46 @@ pipeline {
             }
         }
 
-        stage('Test Containers') {
+        stage('Push Images to Docker Hub') {
             steps {
-                echo 'Docker image build completed successfully.'
-                echo 'Container testing will be added after Kubernetes setup.'
+                echo 'Pushing FoodGo images to Docker Hub...'
+
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DOCKER_USERNAME',
+                        passwordVariable: 'DOCKER_PASSWORD'
+                    )
+                ]) {
+
+                    sh '''
+                        echo "$DOCKER_PASSWORD" | docker login \
+                            -u "$DOCKER_USERNAME" \
+                            --password-stdin
+
+                        docker push ${DOCKERHUB_USER}/foodgo-user-service:v1
+
+                        docker push ${DOCKERHUB_USER}/foodgo-restaurant-service:v1
+
+                        docker push ${DOCKERHUB_USER}/foodgo-order-service:v1
+
+                        docker push ${DOCKERHUB_USER}/foodgo-payment-service:v1
+
+                        docker push ${DOCKERHUB_USER}/foodgo-api-gateway:v1
+
+                        docker push ${DOCKERHUB_USER}/foodgo-frontend:v1
+                    '''
+                }
+            }
+        }
+
+        stage('Verify Images') {
+            steps {
+                echo 'Verifying Docker images...'
+
+                sh '''
+                    docker images | grep malovikas/foodgo
+                '''
             }
         }
     }
@@ -56,7 +94,7 @@ pipeline {
         success {
             echo '======================================'
             echo 'JENKINS PIPELINE SUCCESSFUL'
-            echo 'Docker images built successfully!'
+            echo 'FoodGo images built and pushed!'
             echo '======================================'
         }
 
