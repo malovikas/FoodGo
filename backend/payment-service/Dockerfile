@@ -6,7 +6,7 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY backend/payment-service .
+COPY . .
 
 EXPOSE 5004
 

@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: malovikas/foodgo-user-service:latest
+          image: malovikas/foodgo-user-service:v1
           imagePullPolicy: Always
           ports:
             - containerPort: 5001
@@ -62,7 +62,7 @@ spec:
     spec:
       containers:
         - name: restaurant-service
-          image: malovikas/foodgo-restaurant-service:latest
+          image: malovikas/foodgo-restaurant-service:v1
           imagePullPolicy: Always
           ports:
             - containerPort: 5002
@@ -102,7 +102,7 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: malovikas/foodgo-order-service:latest
+          image: malovikas/foodgo-order-service:v1
           imagePullPolicy: Always
           ports:
             - containerPort: 5003
@@ -142,7 +142,7 @@ spec:
     spec:
       containers:
         - name: payment-service
-          image: malovikas/foodgo-payment-service:latest
+          image: malovikas/foodgo-payment-service:v1
           imagePullPolicy: Always
           ports:
             - containerPort: 5004
@@ -182,7 +182,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: malovikas/foodgo-api-gateway:latest
+          image: malovikas/foodgo-api-gateway:v1
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
