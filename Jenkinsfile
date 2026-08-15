@@ -47,6 +47,7 @@ pipeline {
 
         stage('Push Images to Docker Hub') {
             steps {
+
                 echo 'Pushing FoodGo images to Docker Hub...'
 
                 withCredentials([
@@ -80,50 +81,54 @@ pipeline {
 
         stage('Verify Images') {
             steps {
-                echo 'Verifying Docker images...'
+
+                echo 'Verifying FoodGo images...'
 
                 sh '''
-                    docker images | grep malovikas/foodgo
+                    docker images | grep foodgo
                 '''
             }
         }
-    }
 
-    stage('Deploy to Kubernetes') {
-    steps {
-        echo 'Deploying FoodGo to Kubernetes...'
+        stage('Deploy to Kubernetes') {
+            steps {
 
-        sh '''
-            kubectl apply -f foodgo.yml
+                echo 'Deploying FoodGo to Kubernetes...'
 
-            kubectl rollout restart deployment/user-service -n foodgo
-            kubectl rollout restart deployment/restaurant-service -n foodgo
-            kubectl rollout restart deployment/order-service -n foodgo
-            kubectl rollout restart deployment/payment-service -n foodgo
-            kubectl rollout restart deployment/api-gateway -n foodgo
-            kubectl rollout restart deployment/frontend -n foodgo
+                sh '''
+                    kubectl apply -f foodgo.yml
 
-            kubectl rollout status deployment/user-service -n foodgo
-            kubectl rollout status deployment/restaurant-service -n foodgo
-            kubectl rollout status deployment/order-service -n foodgo
-            kubectl rollout status deployment/payment-service -n foodgo
-            kubectl rollout status deployment/api-gateway -n foodgo
-            kubectl rollout status deployment/frontend -n foodgo
-        '''
+                    kubectl rollout restart deployment/user-service -n foodgo
+                    kubectl rollout restart deployment/restaurant-service -n foodgo
+                    kubectl rollout restart deployment/order-service -n foodgo
+                    kubectl rollout restart deployment/payment-service -n foodgo
+                    kubectl rollout restart deployment/api-gateway -n foodgo
+                    kubectl rollout restart deployment/frontend -n foodgo
+
+                    kubectl rollout status deployment/user-service -n foodgo
+                    kubectl rollout status deployment/restaurant-service -n foodgo
+                    kubectl rollout status deployment/order-service -n foodgo
+                    kubectl rollout status deployment/payment-service -n foodgo
+                    kubectl rollout status deployment/api-gateway -n foodgo
+                    kubectl rollout status deployment/frontend -n foodgo
+                '''
+            }
         }
-    }
-    stage('Staging Verification') {
-    steps {
-        echo 'Verifying FoodGo Staging environment...'
 
-        sh '''
-            kubectl get pods -n foodgo
-            kubectl get services -n foodgo
+        stage('Staging Verification') {
+            steps {
 
-            kubectl get pods -n foodgo \
-                --field-selector=status.phase!=Running
-        '''
-       }
+                echo 'Verifying FoodGo Staging environment...'
+
+                sh '''
+                    kubectl get pods -n foodgo
+                    kubectl get services -n foodgo
+
+                    kubectl get pods -n foodgo \
+                        --field-selector=status.phase!=Running
+                '''
+            }
+        }
     }
 
     post {
@@ -131,7 +136,7 @@ pipeline {
         success {
             echo '======================================'
             echo 'JENKINS PIPELINE SUCCESSFUL'
-            echo 'FoodGo images built and pushed!'
+            echo 'FoodGo CI/CD completed successfully!'
             echo '======================================'
         }
 
