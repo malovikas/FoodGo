@@ -89,6 +89,43 @@ pipeline {
         }
     }
 
+    stage('Deploy to Kubernetes') {
+    steps {
+        echo 'Deploying FoodGo to Kubernetes...'
+
+        sh '''
+            kubectl apply -f foodgo.yml
+
+            kubectl rollout restart deployment/user-service -n foodgo
+            kubectl rollout restart deployment/restaurant-service -n foodgo
+            kubectl rollout restart deployment/order-service -n foodgo
+            kubectl rollout restart deployment/payment-service -n foodgo
+            kubectl rollout restart deployment/api-gateway -n foodgo
+            kubectl rollout restart deployment/frontend -n foodgo
+
+            kubectl rollout status deployment/user-service -n foodgo
+            kubectl rollout status deployment/restaurant-service -n foodgo
+            kubectl rollout status deployment/order-service -n foodgo
+            kubectl rollout status deployment/payment-service -n foodgo
+            kubectl rollout status deployment/api-gateway -n foodgo
+            kubectl rollout status deployment/frontend -n foodgo
+        '''
+        }
+    }
+    stage('Staging Verification') {
+    steps {
+        echo 'Verifying FoodGo Staging environment...'
+
+        sh '''
+            kubectl get pods -n foodgo
+            kubectl get services -n foodgo
+
+            kubectl get pods -n foodgo \
+                --field-selector=status.phase!=Running
+        '''
+       }
+    }
+
     post {
 
         success {
